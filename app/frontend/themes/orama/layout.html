@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/orama/stylesheets/style.css"/>
+    {% block head %}
+
+    {% endblock %}
+    {% block cssExtends %}
+    {% endblock %}
+</head>
+<body>
+<div align="center">
+    <div id="top-menu">
+        <div id="logo">
+            <a href="/"><h1>Album O´Rama</h1></a>
+        </div>
+
+        <div id="menu-divider"></div>
+
+        {{ "main-menu"|get_sidebar(route)|safe }}
+
+        <div id="header-search">
+            <form action="/search" method="get">
+                <div>
+                    <input id="s" type="text" name="s" value="">
+                    <input id="searchsubmit" type="submit" value="Search">
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    {% block content %}{% endblock %}
+
+    <div id="footer">
+        Powered by <a href="/about">ArrowJs framework</a>
+    </div>
+</div>
+{% block jsExtends %}
+{% endblock %}
+</body>
+</html>
