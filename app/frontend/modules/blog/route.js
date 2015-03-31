@@ -24,5 +24,5 @@ module.exports = function (app) {
     app.route('/archives\/:year([0-9]{4})\/:month([0-9]{2})\/page-:page([0-9])\/').get(archives.index);
 
     // Page + Post router
-    app.route('/:alias([a-zA-Z0-9-]+)(/)?').get(post.index);
+    //app.route('/:alias([a-zA-Z0-9-]+)(/)?').get(post.index);
 };

@@ -5,7 +5,13 @@ module.exports = function (sequelize, DataTypes) {
     }, {
         tableName: 'albums_tags',
         createdAt: false,
-        updatedAt: false
+        updatedAt: false,
+        classMethods: {
+            associate: function (models) {
+                AlbumTag.belongsTo(models.tags, {foreignKey : 'tags_id'});
+                AlbumTag.belongsTo(models.albums, {foreignKey : 'albums_id'});
+            }
+        }
     });
     return AlbumTag;
 };

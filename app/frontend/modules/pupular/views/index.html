@@ -4,7 +4,7 @@
         <div id="tags-links">
             <ul id="tags-header-navigation" class="tags">
                 <li class="tags-item">
-                    Random Tags:
+                    Popular Tags:
                 </li>
                 {% for tagItem in tags %}
                     <li class="tags-item">
@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="section-header">
-        <h2>Random Albums</h2>
+        <h2>Popular Albums</h2>
     </div>
     <table class="albums-index">
         <tr>
@@ -23,13 +23,13 @@
             <td valign="top">
 
                 <div class="album-name">
-                    <a href="/album/{{ a.album.id }}/{{ a.album.uri }}"><img src="{{ a.url }}"/> </a>
+                    <a href="/album/{{ a.id }}/{{ a.uri }}"><img src="{{ a.url }}"/> </a>
                 </div>
                 <div class="album-name">
-                    <a href="/album/{{ a.album.id }}/{{ a.album.uri }}">{{ a.album.name }}</a>
+                    <a href="/album/{{ a.id }}/{{ a.uri }}">{{ a.name }}</a>
                 </div>
                 <div class="artist-name">
-                    <a href="/artist/{{ a.album.artist.id }}/{{ a.album.artist.uri }}">{{ a.album.artist.name }}</a>
+                    <a href="/artist/{{ a.artist_id }}/{{ a.artist_uri }}">{{ a.artist }}</a>
                 </div>
             </td>
             {% if (loop.index % 6) == 0 and loop.index != loop.length %}
@@ -38,4 +38,5 @@
             {% if  loop.index == loop.length  %}</tr>{% endif %}
         {% endfor %}
     </table>
+
 {% endblock %}

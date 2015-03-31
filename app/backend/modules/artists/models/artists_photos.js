@@ -1,17 +1,17 @@
 module.exports = function (sequelize, DataTypes) {
-    var AlbumPhoto = sequelize.define("albums_photos", {
-        albums_id: DataTypes.INTEGER,
+    var ArtistsPhoto = sequelize.define("artists_photos", {
+        artists_id: DataTypes.INTEGER,
         type: DataTypes.STRING(32),
         url: DataTypes.STRING(120)
     }, {
-        tableName: 'albums_photos',
+        tableName: 'artists_photos',
         createdAt: false,
         updatedAt: false,
         classMethods: {
             associate: function (models) {
-                AlbumPhoto.belongsTo(models.albums, {foreignKey : 'albums_id'});
+                ArtistsPhoto.belongsTo(models.albums, {foreignKey : 'artists_id'});
             }
         }
     });
-    return AlbumPhoto;
+    return ArtistsPhoto;
 };

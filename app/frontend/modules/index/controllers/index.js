@@ -20,11 +20,24 @@ var _module = new IndexModule();
 _module.index = function (req, res) {
     var index_view = 'index';
     promise.all([
-        __models.albums.findAll({
+        __models.albums_photos.findAll({
+            where: {
+                type: 'large'
+            },
             order: [
                 [sequelize.fn('RANDOM')]
             ],
-            limit: 30
+            limit: 30,
+            include: [
+                {
+                    model: __models.albums,
+                    include: [
+                        {
+                            model: __models.artists
+                        }
+                    ]
+                }
+            ]
         }),
         __models.tags.findAll({
             order: [

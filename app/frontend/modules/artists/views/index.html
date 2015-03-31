@@ -1,0 +1,83 @@
+{% extends 'default_layout.html' %}
+{% block content %}
+
+    <div id="top-tags">
+
+        <div id="tags-links">
+            <ul id="tags-header-navigation" class="tags">
+                <li class="tags-item">
+                    Related Tags:
+                </li>
+                {% for t in tags %}
+                    <li class="tags-item">
+                        <a href="/tag/{{ t.tag.name }}">{{ t.tag.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+
+    <table width="800" align="center" class="artist-showcast" cellspacing="0">
+        <tr>
+            <td valign="top" class="content" align="left">
+
+                <h2>Popular Albums</h2>
+
+                <table class="albums-index" align="center">
+                    <tr>
+                        {% for album in albums %}
+                        <td valign="top" align="left">
+                            <div class="album-name">
+                                <a href="/album/{{ album.id }}/{{ album.uri }}"><img src="{{ album.albums_photos.url }}" /></a>
+                            </div>
+                            <div class="album-name">
+                                <a href="/album/{{ album.id }}/{{ album.uri }}">{{ album.name }}</a>
+                            </div>
+                        </td>
+                        {% if loop.index % 3  == 0 and loop.index != loop.length  %}
+                    </tr><tr>
+                    {% endif %}
+                        {% if loop.index == loop.length %}</tr>{% endif %}
+                    {% endfor %}
+                </table>
+
+                {% if similars.length != 0 %}
+
+                    <h2>Similar Artists</h2>
+
+                    <table class="albums-index" align="center">
+                        <tr>
+                            {% for  similar in similars %}
+                            <td valign="top">
+                                <div class="album-name">
+                                    <a href="/artist/{{ similar.id }}/{{ similar.uri }}"><img src="{{ similar.url }}"/> </a>
+                                </div>
+                                <div class="artist-name">
+                                    <a href="/artist/{{ similar.id }}/{{ similar.uri }}">{{ similar.name }}</a>
+                                </div>
+                            </td>
+                            {% if loop.index % 3  == 0 and loop.index != loop.length  %}
+                        </tr><tr>
+                            {% endif %}
+                            {% if loop.index == loop.length %}</tr>{% endif %}
+                        {% endfor %}
+                    </table>
+
+                {% endif %}
+
+            </td>
+
+            <td class="image" valign="top" align="left">
+
+                <img src="{{ artistInfo.artists_photos.url }}"/>
+
+                <h1>{{ artistInfo.name }}</h1>
+                <div class="bio">{{ artistInfo.biography }}</div>
+
+            </td>
+
+        </tr>
+    </table>
+
+{% endblock %}

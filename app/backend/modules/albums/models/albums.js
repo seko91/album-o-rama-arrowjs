@@ -11,12 +11,14 @@ module.exports = function (sequelize, DataTypes) {
     }, {
         tableName: 'albums',
         createdAt: false,
-        updatedAt: false
-        //classMethods: {
-        //    associate: function (models) {
-        //        Albums.belongsTo(models.albums_photos);
-        //    }
-        //}
+        updatedAt: false,
+        classMethods: {
+            associate: function (models) {
+                Albums.belongsTo(models.artists, {foreignKey : 'artists_id'});
+                Albums.hasMany(models.albums_tracks, { foreignKey: 'albums_id' });
+                Albums.hasMany(models.albums_photos, { foreignKey: 'albums_id' });
+            }
+        }
     });
     return Albums;
 };

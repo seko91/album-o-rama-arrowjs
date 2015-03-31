@@ -1,0 +1,43 @@
+{% extends 'default_layout.html' %}
+{% block content %}
+    <div class="section-header">
+        <h2>Popular Albums by Genre</h2>
+    </div>
+
+    <table><tr>
+            {% for genre in genres %}
+            <td valign="top">
+                <table class="chart">
+                    <tr>
+                        <td colspan="2" class="title" align="left">
+                            <p>{{ genre }}</p>
+                        </td>
+                    </tr>
+                    {% for album in charts[genres.indexOf(genre)] %}
+                        <tr>
+                            <td class="image" valign="top" align="left">
+                                <img src="{{ album.url }}" alt="{{ album.name }}"/>
+                            </td>
+                            <td class="album" valign="top" align="left">
+                                <a href="/album/{{ album.id }}/{{ album.uri }}">{{ album.name }}</a> <br/>
+                                {#{{ link_to('album/' ~ album.id ~ '/' ~ album.uri, album.name) }}<br/>#}
+                                <div class="artist-name">
+                                    <a href="/artist/{{ album.artist_id }}/{{ album.uri }}">{{ album.artist }}</a>
+                                    {#{{ link_to('artist/' ~ album.artist_id ~ '/' ~ album.uri, album.artist) }}#}
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </td>
+
+            {% if (loop.index % 3) == 0 and loop.index != loop.length %}
+        </tr><tr>
+            {% endif %}
+            {% if loop.index == loop.length %}</tr>{% endif %}
+
+            {% endfor %}
+
+    </table>
+
+{% endblock %}
