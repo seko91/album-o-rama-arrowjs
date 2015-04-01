@@ -33,8 +33,7 @@ _module.albumById = function (req, res) {
             },
             include: [
                 {
-                    model: __models.artists,
-                    attributes: ['name']
+                    model: __models.artists
                 }
             ]
         }),

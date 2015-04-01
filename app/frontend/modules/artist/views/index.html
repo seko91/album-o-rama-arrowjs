@@ -29,7 +29,7 @@
                         {% for album in albums %}
                         <td valign="top" align="left">
                             <div class="album-name">
-                                <a href="/album/{{ album.id }}/{{ album.uri }}"><img src="{{ album.albums_photos.url }}" /></a>
+                                <a href="/album/{{ album.id }}/{{ album.uri }}"><img src="{{ album.albums_photos[0].url }}" /></a>
                             </div>
                             <div class="album-name">
                                 <a href="/album/{{ album.id }}/{{ album.uri }}">{{ album.name }}</a>
@@ -70,7 +70,7 @@
 
             <td class="image" valign="top" align="left">
 
-                <img src="{{ artistInfo.artists_photos.url }}"/>
+                <img src="{{ artistInfo.artists_photos[0].url }}"/>
 
                 <h1>{{ artistInfo.name }}</h1>
                 <div class="bio">{{ artistInfo.biography }}</div>

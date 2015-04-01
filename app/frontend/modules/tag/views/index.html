@@ -10,7 +10,7 @@
             <td valign="top">
 
                 <div class="album-name">
-                    <a href="/album/{{ r.album.id }}/{{ r.album.uri }}"><img src="{{ r.album.albums_photos.url }}"/> </a>
+                    <a href="/album/{{ r.album.id }}/{{ r.album.uri }}"><img src="{{ r.album.albums_photos[0].url }}"/> </a>
                 </div>
                 <div class="album-name">
                     <a href="/album/{{ r.album.id }}/{{ r.album.uri }}">{{ r.album.name }}</a>
@@ -28,15 +28,15 @@
 
     <div id="paginator">
 
-        {% if prev %}
+        {% if prev > 0 %}
             <div class="prev">
-                <a href="/tag/{{ tagName }}/{{ prev }}"></a>
+                <a href="/tag/{{ tagName }}/{{ prev }}">Prev</a>
             </div>
         {% endif %}
 
-        {% if next %}
+        {% if next > 0 %}
             <div class="next">
-                <a href="/tag/{{ tagName }}/{{ next }}"></a>
+                <a href="/tag/{{ tagName }}/{{ next }}">Next</a>
             </div>
         {% endif %}
 

@@ -35,7 +35,7 @@ _module.index = function (req, res) {
             { type: sequelize.QueryTypes.SELECT }
         )
     ]).then(function(results){
-        //console.log(results);
+        console.log(results[1]);
         _module.render(req, res, index_view, {
             albums: results[0],
             tags: results[1]

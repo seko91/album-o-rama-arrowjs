@@ -1,0 +1,25 @@
+{% extends 'default_layout.html' %}
+{% block content %}
+    <div class="section-header">
+        <h2>Searching Artists</h2>
+    </div>
+
+    <table class="albums-index">
+        <tr>
+            {% for artist in artists %}
+            <td valign="top">
+                <div class="album-name">
+                    <a href="/artist/{{ artist.id }}/{{ artist.uri }}"><img src="{{ artist.artists_photos[0].url }}" /></a>
+                </div>
+                <div class="artist-name">
+                    <a href="/artist/{{ artist.id }}/{{ artist.uri }}">{{ artist.name }}</a>
+                </div>
+            </td>
+            {% if loop.index % 6 == 0 and loop.index != loop.length %}
+        </tr><tr>
+            {% endif %}
+            {% if loop.index == loop.length %}</tr>{% endif %}
+        {% endfor %}
+    </table>
+
+{% endblock %}

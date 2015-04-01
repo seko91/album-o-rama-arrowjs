@@ -47,25 +47,19 @@ _module.index = function (req, res) {
             ],
             limit: 30,
             offset: (page - 1) * 30
-        },
-            { raw: true })
+        })
     }).then(function(results){
         var totalPage = Math.ceil(results.count / 30);
-        var prev = (page > 1) ? page - 1 : null,
-            next = (page + 1 <= totalPage) ? page +  1 : null;
+        var prev = (page > 1) ? (page - 1) : 0,
+            next = ((page + 1) <= totalPage) ? (page +  1) : 0;
+
+        console.log(totalPage, prev, next);
 
         _module.render(req, res, index_view, {
             tagName: name,
             results: results.rows,
             prev: prev,
             next: next
-        });
-    }).catch(function(err) {
-        _module.render(req, res, index_view, {
-            tagName: null,
-            results: null,
-            prev: null,
-            next: null
         });
     });
 

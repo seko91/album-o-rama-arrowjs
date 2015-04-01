@@ -9,7 +9,7 @@ module.exports = function (app) {
     var search = require('./controllers/search');
 
     // Search router
-    app.route('/search/').get(search.index);
+    //app.route('/search/').get(search.index);
 
     // Categories router
     app.route('/category/:alias([0-9a-zA-Z-]+)(/)?').get(category.index);
