@@ -22,11 +22,7 @@ _module.index = function (req, res) {
     var key = req.query.s || '';
     key = '%' + key.replace(/\s+/g, '%') + '%';
     __models.artists.findAll({
-        where: {
-            name: {
-                $like: key
-            }
-        },
+        where: 'LOWER(name) like \'' +key + '\'',
         include: [
             {
                 model: __models.artists_photos,
