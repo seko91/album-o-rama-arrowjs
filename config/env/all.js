@@ -31,7 +31,7 @@ module.exports = {
     pagination: {
         number_item: 20
     },
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 3131,
     templateEngine: 'nunjucks',
     sessionSecret: 'GREEN',
     sessionCollection: 'sessions',

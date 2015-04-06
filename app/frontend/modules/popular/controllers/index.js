@@ -35,7 +35,7 @@ _module.index = function (req, res) {
             { type: sequelize.QueryTypes.SELECT }
         )
     ]).then(function(results){
-        console.log(results[1]);
+        res.setHeader('Cache-Control', 'public, max-age=31557600');
         _module.render(req, res, index_view, {
             albums: results[0],
             tags: results[1]

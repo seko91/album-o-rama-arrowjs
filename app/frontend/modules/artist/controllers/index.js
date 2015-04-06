@@ -92,6 +92,7 @@ _module.index = function (req, res) {
         //console.log(data[1], '---@@@@@---');
         //console.log(data[2], '---@@@@@---');
         //console.log(data[3], '---@@@@@---');
+        res.setHeader('Cache-Control', 'public, max-age=31557600');
         _module.render(req, res, index_view, {
             artistInfo: data[0],
             tags:data[1],
