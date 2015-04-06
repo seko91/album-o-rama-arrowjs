@@ -1,7 +1,8 @@
+'use strict'
 /**
  * Created by thanhnv on 2/23/15.
  */
-var menus = {};
+let menus = {};
 module.exports = function () {
     // Main Navigation group
     menus.default = {
@@ -31,7 +32,18 @@ module.exports = function () {
         "plugins",
         "configurations"
     ];
-
+    menus.addGroup = function (alias, title) {
+        menus[alias] = {
+            title: title,
+            sort: 999,
+            modules: {}
+        }
+    };
+    menus.addMenus = function (group, menus) {
+        for (let i in menus) {
+            menus[group].modules.push(menus[i]);
+        }
+    };
     return menus;
 };
 

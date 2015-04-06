@@ -1,11 +1,12 @@
-var promise = require('bluebird');
+"use strict"
+let promise = require('bluebird');
 
-var config = require(__base + 'config/config.js');
-var slug = require('slug');
+let config = require(__base + 'config/config.js');
+let slug = require('slug');
 
-var route = 'blog';
+let route = 'blog';
 
-var breadcrumb =
+let breadcrumb =
     [
         {
             title: 'Home',
@@ -26,7 +27,7 @@ function BlogModule() {
     BaseModuleBackend.call(this);
     this.path = "/blog";
 }
-var _module = new BlogModule();
+let _module = new BlogModule();
 
 exports.index = function (req, res) {
     // Create breadcrumb
@@ -37,13 +38,13 @@ exports.index = function (req, res) {
     res.locals.deleteButton = __acl.addButton(req, route, 'post_delete');
 
     // Get current page and default sorting
-    var page = req.params.page || 1;
-    var column = req.params.sort || 'created_by';
-    var order = req.params.order || 'desc';
+    let page = req.params.page || 1;
+    let column = req.params.sort || 'created_by';
+    let order = req.params.order || 'desc';
     res.locals.root_link = '/admin/blog/posts/page/' + page + '/sort';
 
     // Create filter
-    var filter = __.createFilter(req, res, route, '/admin/blog/posts', column, order, [
+    let filter = __.createFilter(req, res, route, '/admin/blog/posts', column, order, [
         {
             column: "id",
             width: '1%',
@@ -117,7 +118,7 @@ exports.index = function (req, res) {
     __models.posts.findAndCountAll({
         include: [
             {
-                model: __models.user, attribute: ['display_name'],
+                model: __models.user, attributes: ['display_name'],
                 where: '1 = 1'
             }
         ],
@@ -126,7 +127,7 @@ exports.index = function (req, res) {
         limit: config.pagination.number_item,
         offset: (page - 1) * config.pagination.number_item
     }).then(function (results) {
-        var totalPage = Math.ceil(results.count / config.pagination.number_item);
+        let totalPage = Math.ceil(results.count / config.pagination.number_item);
 
         // Render view
         _module.render(req, res, '/posts/index.html', {
@@ -162,8 +163,8 @@ exports.create = function (req, res) {
         where: 'id <> 1 AND published = 1'
     }).then(function (categories) {
         // Get categories tree
-        var categoryTree = [];
-        for (var i in categories) {
+        let categoryTree = [];
+        for (let i in categories) {
             if (categories.hasOwnProperty(i) && categories[i].id == 1) {
                 categoryTree.push(categories[i]);
                 break;
@@ -192,7 +193,7 @@ exports.create = function (req, res) {
 
 exports.saveCreate = function (req, res) {
     // Get post data
-    var data = req.body;
+    let data = req.body;
 
     // Generate alias
     if (data.alias == undefined || data.alias == '') {
@@ -259,12 +260,12 @@ exports.edit = function (req, res) {
                 __models.posts.find(req.params.cid)
             ]
         ).then(function (results) {
-            var categories = results[0];
-            var post = results[1];
+            let categories = results[0];
+            let post = results[1];
 
             // Get categories tree
-            var categoryTree = [];
-            for (var i in categories) {
+            let categoryTree = [];
+            for (let i in categories) {
                 if (categories.hasOwnProperty(i) && categories[i].id == 1) {
                     categoryTree.push(categories[i]);
                     break;
@@ -279,7 +280,7 @@ exports.edit = function (req, res) {
                 categories: categoryTree,
                 post: post,
                 categories_text: post.categories,
-                seo_info: post.seo_info,
+                seo_info: encodeURIComponent(post.seo_info),
                 seo_enable: __seo_enable
             });
         }).catch(function (error) {
@@ -299,8 +300,7 @@ exports.edit = function (req, res) {
 
 exports.saveEdit = function (req, res) {
     // Get post data
-    var data = req.body;
-
+    let data = req.body;
     // Find post by id
     __models.posts.find(req.params.cid).then(function (post) {
         // Generate alias
@@ -308,7 +308,7 @@ exports.saveEdit = function (req, res) {
             data.alias = data.title;
         }
         data.alias = slug(data.alias.toLowerCase());
-
+        data.seo_info = decodeURIComponent(data.seo_info);
         // Set type
         data.type = 'post';
 
@@ -340,8 +340,8 @@ exports.saveEdit = function (req, res) {
             res.locals.backButton = '/admin/blog/posts/';
 
             // Get categories tree
-            var categoryTree = [];
-            for (var i in categories) {
+            let categoryTree = [];
+            for (let i in categories) {
                 if (categories.hasOwnProperty(i) && categories[i].id == 1) {
                     categoryTree.push(categories[i]);
                     break;
@@ -381,7 +381,7 @@ exports.deleteRecord = function (req, res) {
     });
 };
 
-var StringUtilities = {
+let StringUtilities = {
     // Add prefix to string
     repeat: function (str, times) {
         str = (str == null) ? '—' : str;
@@ -390,11 +390,11 @@ var StringUtilities = {
 };
 
 function getCategoriesTree(id, categories) {
-    var categoriesTree = [];
-    for (var index in categories) {
+    let categoriesTree = [];
+    for (let index in categories) {
         // Get children of category with id
         if (categories.hasOwnProperty(index) && categories[index].parent == id) {
-            var category = categories[index];
+            let category = categories[index];
             // Add prefix '-' to category name
             category.name = StringUtilities.repeat(null, parseInt(category.level) - 1) + " " + category.name;
 

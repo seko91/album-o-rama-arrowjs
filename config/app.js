@@ -7,7 +7,7 @@
 /**
  * Module dependencies.
  */
-var fs = require('fs'),
+let fs = require('fs'),
     http = require('http'),
     https = require('https'),
     express = require('express'),
@@ -24,27 +24,31 @@ var fs = require('fs'),
     RedisStore = require('connect-redis')(session),
     nunjucks = require('nunjucks'),
     _ = require('lodash'),
-    serveStatic = require('serve-static'),
+    //serveStatic = require('serve-static'),
     path = require('path');
 
 module.exports = function () {
     // Initialize express app
-    var app = express();
+    let app = express();
 
-
-    // Setting application local variables
-    /*app.locals.title = config.app.title;
-     app.locals.description = config.app.description;
-     app.locals.keywords = config.app.keywords;
-     app.locals.facebookAppId = config.facebook.clientID;*/
-//    app.locals.jsFiles = config.getJavaScriptAssets();
-//    app.locals.cssFiles = config.getCSSAssets();
+    // Setting the app router and static folder
+    /*let setStaticResourceFolder = function (req, res, next) {
+     //console.log(process.cwd());
+     let myRegex = /^(\/admin\/?)/g;
+     let match = myRegex.exec(req.url);
+     if (match) {
+     let serve = serveStatic(__base + 'app/backend/views_layout');
+     }
+     else {
+     next();
+     }
+     serve(req, res, next);
+     };*/
 
     redis.get(config.key, function (err, result) {
         if (result != null) {
-            var tmp = JSON.parse(result);
+            let tmp = JSON.parse(result);
             _.assign(config, tmp);
-
         }
         else {
             redis.set(config.redis_prefix +config.key, JSON.stringify(config), redis.print);
@@ -61,18 +65,18 @@ module.exports = function () {
         },
         level: 9
     }));
-
+    app.use(express.static(path.resolve('./public')));
     // Showing stack errors
     app.set('showStackError', true);
 
     // Set swig as the template engine
     //app.engine('html', nunjucks);
-    var e = nunjucks.configure(__base + 'app/themes', {
+    /*let e = nunjucks.configure(__base + 'app/themes', {
         autoescape: true,
         express: app
     });
     //Initials custom filter
-    __.getAllCustomFilter(e);
+    __.getAllCustomFilter(e);*/
 
     // Set views path and view engine
     app.set('view engine', 'html');
@@ -99,11 +103,13 @@ module.exports = function () {
     // CookieParser should be above session
     app.use(cookieParser());
 
-    // Express MongoDB session storage
-    var secret = "hjjhdsu465aklsdjfhasdasdf342ehsf09kljlasdf";
+    // Express redis session storage
+    let secret = "hjjhdsu465aklsdjfhasdasdf342ehsf09kljlasdf";
     app.use(session({
         store: new RedisStore({host: config.redis.host, port: config.redis.port, client: redis}),
-        secret: secret
+        secret: secret,
+        resave: false,
+        saveUninitialized: true
     }));
     app.use(function (req, res, next) {
         if (!req.session) {
@@ -125,20 +131,7 @@ module.exports = function () {
     app.use(helmet.ienoopen());
     app.disable('x-powered-by');
 
-    var setStaticResourceFolder = function (req, res, next) {
-        //console.log(process.cwd());
-        var myRegex = /^(\/admin\/?)/g;
-        var match = myRegex.exec(req.url);
-        if (match) {
-            var serve = serveStatic(__base + 'app/backend/views_layout');
-        }
-        else {
-            var serve = serveStatic(__base + 'app/frontend/themes');
-        }
-        serve(req, res, next);
-    };
-    // Setting the app router and static folder
-    app.use(express.static(path.resolve('./public')));
+
     //app.use(setStaticResourceFolder);
     // Passing the request url to environment locals
     app.use(function (req, res, next) {
@@ -168,7 +161,7 @@ module.exports = function () {
 
     //module manager backend
     require(__base + 'app/backend/core_route')(app);
-    app.use('/admin/*', require('../app/middleware/modules-plugin.js'));
+    //app.use('/admin/*', require('../app/middleware/modules-plugin.js'));
     // Globbing routing admin files
     config.getGlobbedFiles('./app/backend/modules/*/route.js').forEach(function (routePath) {
         app.use('/' + config.admin_prefix, require(path.resolve(routePath)));
@@ -176,21 +169,10 @@ module.exports = function () {
 
     // Globbing routing admin files
     config.getGlobbedFiles('./app/frontend/modules/*/settings/*.js').forEach(function (routePath) {
-        require(path.resolve(routePath))(app, config);
-    });
-
-    app.use('/admin/*', function (req, res, next) {
-        //return next();
-        if (!req.isAuthenticated()) {
-            console.log("redirect to admin login");
-            return res.redirect('/admin/login');
-        }
-//        res.locals.__user = req.user;
-        next();
+        __setting_menu_module.push(require(path.resolve(routePath))(app, config));
     });
 
     //module manager frontend
-    //app.use('/^((?!admin))/*', require('../app/middleware/modules-f-plugin.js'));
     app.use('/*', require('../app/middleware/modules-f-plugin.js'));
 
     // Globbing frontend module files
@@ -200,11 +182,7 @@ module.exports = function () {
     });
 
     // Globbing routing files
-    config.getGlobbedFiles('./app/frontend/modules/*/route.js').forEach(function (routePath) {
-        console.log(path.resolve(routePath));
-        require(path.resolve(routePath))(app);
-    });
-
+    require(__base + 'app/frontend/modules/routes')(app);
     // Globbing menu files
     config.getGlobbedFiles('./app/menus/*/*.js').forEach(function (routePath) {
         console.log(routePath);
@@ -227,7 +205,7 @@ module.exports = function () {
 
     // Assume 404 since no middleware responded
     app.use(function (req, res) {
-        var env = __.createNewEnv([__base + 'app/frontend/themes', __base + 'app/frontend/themes/' + config.themes]);
+        let env = __.createNewEnv([__base + 'app/frontend/themes', __base + 'app/frontend/themes/' + config.themes]);
         env.render('404.html', res.locals, function (err, re) {
             res.send(re);
         });
@@ -239,11 +217,11 @@ module.exports = function () {
         console.log('Securely using https protocol');
 
         // Load SSL key and certificate
-        var privateKey = fs.readFileSync('./config/sslcerts/key.pem', 'utf8');
-        var certificate = fs.readFileSync('./config/sslcerts/cert.pem', 'utf8');
+        let privateKey = fs.readFileSync('./config/sslcerts/key.pem', 'utf8');
+        let certificate = fs.readFileSync('./config/sslcerts/cert.pem', 'utf8');
 
         // Create HTTPS Server
-        var httpsServer = https.createServer({
+        let httpsServer = https.createServer({
             key: privateKey,
             cert: certificate
         }, app);

@@ -1,3 +1,4 @@
+'use strict'
 /**
  * Created by thanhnv on 3/21/15.
  */
@@ -6,7 +7,7 @@ var socket = require('socket.io'),
     config = require(__base + 'config/config');
 
 function SocketManager(server) {
-    var self = this;
+    let self = this;
     self.sockets = [];
     self.io = socket.listen(server);
     self.io.on('connection', function (socket) {

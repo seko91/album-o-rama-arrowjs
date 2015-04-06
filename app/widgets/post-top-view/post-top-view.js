@@ -1,25 +1,27 @@
+"use strict"
 var BaseWidget = require('../base_widget'),
     util = require('util'),
     _ = require('lodash'),
     Promise = require('bluebird');
-;
 
-var _base_config = {
-    alias: "post-top-view",
-    name: "Blog Top View",
-    description: "Top view in post",
-    author: "ZaiChi",
-    version: "0.1.0",
-    options: {
-        id: '',
-        title: '',
-        number_to_show: '',
-        display_date: '',
-        display_index: ''
-    }
-};
+
+
 
 function PostTopView() {
+    let _base_config = {
+        alias: "post-top-view",
+        name: "Blog Top View",
+        description: "Top view in post",
+        author: "ZaiChi",
+        version: "0.1.0",
+        options: {
+            id: '',
+            title: '',
+            number_to_show: '',
+            display_date: '',
+            display_index: ''
+        }
+    };
     PostTopView.super_.call(this);
     _.assign(this, _base_config);
     this.files = BaseWidget.prototype.getAllLayouts.call(this, _base_config.alias);
@@ -28,7 +30,7 @@ function PostTopView() {
 util.inherits(PostTopView, BaseWidget);
 
 PostTopView.prototype.render = function (widget) {
-    var _this = this;
+    let _this = this;
     return new Promise(function (resolve, reject) {
         __models.posts.findAll({
             where : "type = 'post'",

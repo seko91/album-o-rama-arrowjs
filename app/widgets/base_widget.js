@@ -1,3 +1,4 @@
+'use strict'
 /**
  * Created by thanhnv on 3/9/15.
  */
@@ -19,21 +20,21 @@ var _base_config = {
         file: ''
     }
 };
-
+var env = __.createNewEnv();
 //Base constructor
 function BaseWidget() {
     _.assign(this, _base_config);
-    this.env = __.createNewEnv();
+    this.env = env;
 }
 BaseWidget.prototype.getAllLayouts = function (alias) {
-    var files = [];
+    let files = [];
     config.getGlobbedFiles(__base + "app/frontend/themes/" + config.themes + '/_widgets/' + alias + '/*.html').forEach(function (path) {
-        var s = path.split('/');
+        let s = path.split('/');
         files.push(s[s.length - 1]);
     });
     if (files.length == 0) {
         config.getGlobbedFiles(__base + "app/frontend/themes/default/_widgets/" + alias + "/*.html").forEach(function (path) {
-            var s = path.split('/');
+            let s = path.split('/');
             files.push(s[s.length - 1]);
         });
     }
@@ -41,7 +42,7 @@ BaseWidget.prototype.getAllLayouts = function (alias) {
 }
 BaseWidget.prototype.save = function (data) {
     return new Promise(function (done, reject) {
-        var json_data = _.clone(data);
+        let json_data = _.clone(data);
         delete json_data.sidebar;
         delete json_data.id;
         json_data = JSON.stringify(json_data);
@@ -71,9 +72,9 @@ BaseWidget.prototype.save = function (data) {
     });
 }
 BaseWidget.prototype.render_setting = function (widget_type, widget) {
-    var _this = this;
+    let _this = this;
     return new Promise(function (done, reject) {
-        _this.env.render(widget_type + '/setting.html', {widget: widget, widget_type: widget_type, files: _this.files},
+        env.render(widget_type + '/setting.html', {widget: widget, widget_type: widget_type, files: _this.files},
             function (err, re) {
                 done(re);
             }).catch(function (err) {
@@ -84,11 +85,11 @@ BaseWidget.prototype.render_setting = function (widget_type, widget) {
 }
 //Render v
 BaseWidget.prototype.render = function (widget, data) {
-    var _this = this;
+    let _this = this;
     return new Promise(function (resolve, reject) {
-        var renderWidget = Promise.promisify(_this.env.render, _this.env);
-        var widgetFile = widget.widget_type + '/' + widget.data.file;
-        var widgetFilePath = __base + 'app/frontend/themes/' + config.themes + '/_widgets/' + widgetFile;
+        let renderWidget = Promise.promisify(env.render, env);
+        let widgetFile = widget.widget_type + '/' + widget.data.file;
+        let widgetFilePath = __base + 'app/frontend/themes/' + config.themes + '/_widgets/' + widgetFile;
 
         if (!fs.existsSync(widgetFilePath)) {
             widgetFilePath = 'default/_widgets/' + widgetFile;
@@ -99,7 +100,7 @@ BaseWidget.prototype.render = function (widget, data) {
         if (widgetFilePath.indexOf('.html') == -1) {
             widgetFilePath += '.html';
         }
-        var context = _.assign({widget: widget}, data);
+        let context = _.assign({widget: widget}, data);
         resolve(renderWidget(widgetFilePath, context).catch(function (err) {
             return "<p>" + err.cause;
         }));

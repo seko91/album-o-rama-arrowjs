@@ -23,7 +23,10 @@ global.__current_theme = {};
 global.__pluginManager = require('./libs/plugins_manager');
 global.BaseModuleBackend = require('./app/backend/base_module');
 global.BaseModuleFrontend = require('./app/frontend/base_module');
+global.__setting_menu_module = [];
 __pluginManager.loadAllPlugin();
+
+let redis = require('redis').createClient();
 
 // Init SEO
 redis.get('seo_enable', function (err, result) {
@@ -57,5 +60,6 @@ global.__socketManager = require('./libs/socket_manager')(server);
 // Expose app
 module.exports = app;
 
+//debug('Route',app._router.stack);
 // Logging initialization
 console.log('Application started on port ' + config.port);

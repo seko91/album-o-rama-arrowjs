@@ -1,39 +1,49 @@
 /**
  * Created by thanhnv on 3/28/15.
  */
-'use strict';
+'use strict'
 module.exports = function (app, config) {
-    var moduleName = 'categories';
-    app.route('/_menus/' + moduleName + '/page/:page').get(function (req, res) {
+    let alias = 'categories';
+
+    app.route('/_menus/' + alias + '/page/:page').get(function (req, res) {
         if (req.isAuthenticated()) {
-            var page = req.params.page || 1;
-            __models.categories.findAndCount({
-                limit: config.pagination.number_item,
-                offset: (page - 1) * config.pagination.number_item
+            // Get page and keyword to search
+            let page = req.params.page || 1;
+            let s = req.query.s;
+
+            // Set conditions
+            let conditions = "id <> 1 AND published = 1";
+            if (s != '') conditions += " AND name ilike '%" + s + "%'";
+
+            // Find all categories with page and search keyword
+            __models.categories.findAndCountAll({
+                attributes: ['id', 'alias', 'name'],
+                where: conditions,
+                limit: 10,
+                offset: (page - 1) * 10
             }, {raw: true}).then(function (results) {
-                var totalRows = results.count;
-                var items = results.rows;
-                var totalPage = Math.ceil(results.count / config.pagination.number_item);
-                /*var html = '<ul>';
-                 for (var i in items) {
-                 html += '<li><div class="checkbox"><label><input type="checkbox" value="' + items[i].name + '">' + items[i].name + '</label></div></li>'
-                 }
-                 html += '</ul>'*/
+                let totalRows = results.count;
+                let items = results.rows;
+                let totalPage = Math.ceil(results.count / 10);
+
+                // Send json response
                 res.jsonp({
                     totalRows: totalRows,
                     totalPage: totalPage,
                     items: items,
-                    link_template:'/categories/{id}/{alias}'
+                    title_column: 'name',
+                    link_template: '/category/{alias}'
                 });
             });
         }
         else {
-            res.send("OK");
+            res.send("Not Authenticated");
         }
-
     });
+
     return {
-        name: 'Categories',
-        alias: moduleName
+        title: 'Categories',
+        alias: alias,
+        search: true
     };
 };

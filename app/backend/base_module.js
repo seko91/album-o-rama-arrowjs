@@ -2,9 +2,10 @@
 /**
  * Created by thanhnv on 3/18/15.
  */
-let nunjucks = require('nunjucks'),
+var debug=require('debug')("BaseBackEnd"),
+    nunjucks = require('nunjucks'),
     _ = require('lodash');
-let env = __.createNewEnv([__dirname + '/views_layout', __dirname + '/modules']);
+var env = __.createNewEnv([__dirname + '/views_layout', __dirname + '/modules']);
 function BaseModuleBackend() {
 
     this.render = function (req, res, view, options) {
@@ -20,8 +21,12 @@ function BaseModuleBackend() {
         view = self.path.substring(1) + '/views/' + view;
         ////console.log('**********', env.loaders, view);
         env.render(view, _.assign(res.locals, options), function (err, re) {
-            ////console.log('???????', err);
-            res.send(re);
+            if(err){
+                res.send(err.stack);
+            }
+            else{
+                res.send(re);
+            }
         });
     }
 }

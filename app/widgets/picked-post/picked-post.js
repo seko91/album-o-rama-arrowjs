@@ -1,24 +1,26 @@
+"use strict"
 var BaseWidget = require('../base_widget'),
     util = require('util'),
     _ = require('lodash'),
     Promise = require('bluebird');
 
-var _base_config = {
-    alias: "picked-post",
-    name: "Picked post",
-    description: "Picked post",
-    author: "ZaiChi",
-    version: "0.1.0",
-    options: {
-        id: '',
-        title: '',
-        text_ids: '',
-        display_date: '',
-        display_index: ''
-    }
-};
+
 
 function PickedPost() {
+    let _base_config = {
+        alias: "picked-post",
+        name: "Picked post",
+        description: "Picked post",
+        author: "ZaiChi",
+        version: "0.1.0",
+        options: {
+            id: '',
+            title: '',
+            text_ids: '',
+            display_date: '',
+            display_index: ''
+        }
+    };
     PickedPost.super_.call(this);
     _.assign(this, _base_config);
     this.files = BaseWidget.prototype.getAllLayouts.call(this, _base_config.alias);
@@ -28,9 +30,9 @@ util.inherits(PickedPost, BaseWidget);
 PickedPost.prototype.save = function (data, done) {
     //Processing here
     if (data.text_ids.length > 0) {
-        var ids = data.text_ids.split(',');
+        let ids = data.text_ids.split(',');
         if (ids.length > 0) {
-            for (var i = 0; i < ids.length; i++) {
+            for (let i = 0; i < ids.length; i++) {
                 ids[i] = parseInt(ids[i]);
             }
         }
@@ -42,9 +44,9 @@ PickedPost.prototype.save = function (data, done) {
 }
 
 PickedPost.prototype.render = function (widget) {
-    var _this = this;
+    let _this = this;
     return new Promise(function (resolve) {
-        var ids = widget.data.text_ids.split(',');
+        let ids = widget.data.text_ids.split(',');
         widget.data.text_ids = widget.data.text_ids.trim();
         if (widget.data.text_ids.length > 0 && ids.length > 0) {
             __models.posts.findAll({
