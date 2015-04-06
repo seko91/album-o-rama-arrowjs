@@ -32,6 +32,6 @@ module.exports.loadAllModules = function () {
             delete __f_modules[i];
         }
     }
-    redis.set('all_fmodules', JSON.stringify(__f_modules), redis.print);
+    redis.set(config.redis_prefix +'all_fmodules', JSON.stringify(__f_modules), redis.print);
 }
 

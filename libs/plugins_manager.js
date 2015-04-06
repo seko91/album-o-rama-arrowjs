@@ -25,7 +25,7 @@ function PluginManager() {
                     var plugin = require(filePath);
                     self.plugins.push(plugin);
                 });
-                redis.set(self.redis_key,JSON.stringify(self.plugins),redis.print);
+                redis.set(config.redis_prefix +self.redis_key,JSON.stringify(self.plugins),redis.print);
             }
         });
 

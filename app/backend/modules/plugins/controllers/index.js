@@ -61,7 +61,7 @@ _module.setting = function (req, res) {
 _module.save_setting = function (req, res, next) {
     var plg = __pluginManager.getPlugin(req.params.alias);
     plg.options = req.body;
-    redis.set('all_plugins', JSON.stringify(__pluginManager.plugins), redis.print);
+    redis.set(config.redis_prefix +'all_plugins', JSON.stringify(__pluginManager.plugins), redis.print);
     req.flash.success("Saved success");
     next();
 };
@@ -69,7 +69,7 @@ _module.save_setting = function (req, res, next) {
 _module.active = function (req, res, next) {
     var plg = __pluginManager.getPlugin(req.params.alias);
     plg.active = !plg.active;
-    redis.set('all_plugins', JSON.stringify(__pluginManager.plugins), redis.print);
+    redis.set(config.redis_prefix +'all_plugins', JSON.stringify(__pluginManager.plugins), redis.print);
     next();
 };
 

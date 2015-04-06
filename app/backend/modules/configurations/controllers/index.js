@@ -56,7 +56,7 @@ _module.update_setting = function (req, res, next) {
     config.redis.host = data.redis_host;
     config.redis.port = data.redis_port;
 
-    redis.set(config.key, JSON.stringify(config), redis.print);
+    redis.set(config.redis_prefix +config.key, JSON.stringify(config), redis.print);
     req.flash.success('Saved success');
     next();
 

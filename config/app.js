@@ -47,7 +47,7 @@ module.exports = function () {
 
         }
         else {
-            redis.set(config.key, JSON.stringify(config), redis.print);
+            redis.set(config.redis_prefix +config.key, JSON.stringify(config), redis.print);
         }
         app.locals.title = config.app.title;
         app.locals.description = config.app.description;
@@ -162,7 +162,7 @@ module.exports = function () {
                 console.log(path.resolve(routePath));
                 require(path.resolve(routePath))(__modules);
             });
-            redis.set('all_modules', JSON.stringify(__modules), redis.print);
+            redis.set(config.redis_prefix +'all_modules', JSON.stringify(__modules), redis.print);
         }
     });
 

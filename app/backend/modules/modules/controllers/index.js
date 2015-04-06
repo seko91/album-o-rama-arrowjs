@@ -43,7 +43,7 @@ _module.active = function (req, res) {
         __modules[req.params.route].active = false;
     }
 
-    redis.set('all_modules', JSON.stringify(__modules), redis.print);
+    redis.set(config.redis_prefix +'all_modules', JSON.stringify(__modules), redis.print);
     return res.redirect('/admin/modules');
 };
 

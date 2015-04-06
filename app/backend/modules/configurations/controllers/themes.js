@@ -76,7 +76,7 @@ _module.detail = function (req, res) {
 
 _module.change_themes = function (req, res) {
     config.themes = req.params.themeName;
-    redis.set(config.key, JSON.stringify(config), redis.print);
+    redis.set(config.redis_prefix +config.key, JSON.stringify(config), redis.print);
     res.send("OK");
 };
 

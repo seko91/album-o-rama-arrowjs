@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    key:'site_setting',
+    key:'orama_site_setting',
     app: {
         title: 'GREEN',
         description: 'Sequelize, Express and Node.js',
@@ -9,6 +9,7 @@ module.exports = {
         logo:'',
         icon:''
     },
+    redis_prefix: 'orama_',
     admin_prefix: 'admin',
     date_format: 'd/m/Y',//'Y-m-d'
     number_format: {
