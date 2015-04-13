@@ -9,11 +9,26 @@ module.exports = function (app, config) {
             res.jsonp({
                 totalRows: 1,
                 totalPage: 1,
-                items: [{
-                    'title': 'Home Page'
-                }],
+                items: [
+                    {
+                        'title': 'Home',
+                        'link': '/'
+                    },
+                    {
+                        'title': 'Popular',
+                        'link': '/popular'
+                    },
+                    {
+                        'title': 'Charts',
+                        'link': '/charts'
+                    },
+                    {
+                        'title': 'About',
+                        'link': '/about'
+                    }
+                ],
                 title_column: 'title',
-                link_template: '/'
+                link_template: '{link}'
             });
         }
         else {
@@ -22,7 +37,7 @@ module.exports = function (app, config) {
     });
 
     return {
-        title: 'Home',
+        title: 'Static pages',
         alias: alias,
         search: false
     };
