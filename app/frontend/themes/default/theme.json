@@ -1,7 +1,7 @@
 {
     "name": "Orama",
     "alias": "orama",
-    "folder": "orama",
+    "folder": "default",
     "author": "phalconPHP",
     "link": "http://album-o-rama.phalconphp.com/index",
     "thumbnail": "orama-thumbnail.jpg",
