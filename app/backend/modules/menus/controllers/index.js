@@ -217,7 +217,7 @@ _module.menuById = function (req, res, next, id) {
     }).then(function (menu_details) {
         res.locals.menu_details = JSON.stringify(menu_details);
         next();
-    }).catch(function () {
+    }).catch(function (error) {
         req.flash.error('Name: ' + error.name + '<br />' + 'Message: ' + error.message);
         next();
     });
