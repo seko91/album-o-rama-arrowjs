@@ -65,7 +65,7 @@ module.exports = function () {
         },
         level: 9
     }));
-    app.use(express.static(path.resolve('./public')));
+    app.use(express.static(path.resolve('./public'), {maxAge: 3600}));
     // Showing stack errors
     app.set('showStackError', true);
 
@@ -112,6 +112,7 @@ module.exports = function () {
         saveUninitialized: true
     }));
     app.use(function (req, res, next) {
+        res.setHeader('Cache-Control', 'public, max-age=600');
         if (!req.session) {
             return next(new Error('Session destroy')); // handle error
         }

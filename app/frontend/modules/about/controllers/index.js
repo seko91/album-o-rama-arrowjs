@@ -18,7 +18,6 @@ function IndexModule() {
 }
 var _module = new IndexModule();
 _module.index = function (req, res) {
-    res.setHeader('Cache-Control', 'public, max-age=31557600');
     _module.render(req, res, 'index', {});
 };
 util.inherits(IndexModule, BaseModuleFrontend);

@@ -53,7 +53,6 @@ _module.index = function (req, res) {
         var prev = (page > 1) ? (page - 1) : 0,
             next = ((page + 1) <= totalPage) ? (page +  1) : 0;
 
-        res.setHeader('Cache-Control', 'public, max-age=31557600');
         _module.render(req, res, index_view, {
             tagName: name,
             results: results.rows,

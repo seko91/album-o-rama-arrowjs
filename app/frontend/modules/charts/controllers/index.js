@@ -48,7 +48,6 @@ _module.index = function (req, res) {
     });
 
     promise.all(charts).then(function (results) {
-        res.setHeader('Cache-Control', 'public, max-age=31557600');
         _module.render(req, res, index_view, {
             charts: results,
             genres: tagGenres
