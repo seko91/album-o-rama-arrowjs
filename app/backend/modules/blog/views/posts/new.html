@@ -1,7 +1,6 @@
 {% extends 'layout.html' %}
 
 {% block cssExtends %}
-    <link href="/admin/plugins/ckeditor/plugins/codemirror/theme/monokai.css" rel="stylesheet">
     <link href="/admin/plugins/select2/select2.min.css" rel="stylesheet">
     <style>
         #feature .modal-dialog {
@@ -73,11 +72,11 @@
                                 <div class="form-group">
                                     <label class="control-label">Feature Image</label>
 
-                                    <img id="previewImage" src="{{ post.image }}" class="img-thumbnail">
+                                    <img id="previewImage" src="{{ post.image }}" class="img-thumbnail"/>
 
                                     <input class="form-control" type="text" name="image" id="txtSelectedFile"
                                            placeholder="Click here to select a file" onclick="openModelFeature()"
-                                           value="{{ post.image }}">
+                                           value="{{ post.image }}"/>
 
                                     <div id="roxyCustomPanel2" style="display: none;">
                                         <iframe src="/fileman/index.html?integration=custom&type=files&txtFieldId=txtSelectedFile"
