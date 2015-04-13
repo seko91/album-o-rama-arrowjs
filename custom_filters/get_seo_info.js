@@ -18,7 +18,7 @@ module.exports = function (env) {
             '<meta name="keywords" content="' + seo_info.meta_keyword + '">\n';
 
         if(this.ctx.description) {
-            var func1 = env.getFilter('striptags');
+            var func1 = env.getFilter('strip_tags');
             var func2 = env.getFilter('truncate');
             var des = func2(func1(this.ctx.description), 155);
             html += '<meta name="description" content="' + des + '">';

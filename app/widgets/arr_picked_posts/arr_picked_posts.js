@@ -4,8 +4,6 @@ var BaseWidget = require('../base_widget'),
     _ = require('lodash'),
     Promise = require('bluebird');
 
-
-
 function PickedPosts() {
     let _base_config = {
         alias: "arr_picked_posts",
@@ -41,7 +39,7 @@ PickedPosts.prototype.save = function (data, done) {
         data.text_ids = '';
     }
     return BaseWidget.prototype.save.call(this, data, done);
-}
+};
 
 PickedPosts.prototype.render = function (widget) {
     let _this = this;
@@ -64,6 +62,6 @@ PickedPosts.prototype.render = function (widget) {
             resolve(BaseWidget.prototype.render.call(_this, widget, {items: []}));
         }
     });
-}
+};
 
 module.exports = PickedPosts;

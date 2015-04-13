@@ -6,6 +6,7 @@ var debug=require('debug')("BaseBackEnd"),
     nunjucks = require('nunjucks'),
     _ = require('lodash');
 var env = __.createNewEnv([__dirname + '/views_layout', __dirname + '/modules']);
+
 function BaseModuleBackend() {
 
     this.render = function (req, res, view, options) {
