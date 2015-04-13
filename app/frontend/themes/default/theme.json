@@ -1,40 +1,18 @@
 {
-    "name": "Corlate",
-    "alias": "default",
-    "folder": "default",
-    "author": "shapebootstrap",
-    "link": "http://shapebootstrap.net/item/corlate-free-responsive-business-html-template/",
-    "thumbnail": "corlate-thumbail.jpg",
+    "name": "Orama",
+    "alias": "orama",
+    "folder": "orama",
+    "author": "phalconPHP",
+    "link": "http://album-o-rama.phalconphp.com/index",
+    "thumbnail": "orama-thumbnail.jpg",
     "sidebars": [
         {
             "name": "main-menu",
             "title": "Main Menu"
         },
         {
-            "name": "sidebar1",
-            "title": "Sidebar 1"
-        },
-        {
-            "name": "sidebar2",
-            "title": "Sidebar 2"
-        },
-        {
-            "name": "sidebar3",
-            "title": "Sidebar 3"
-        },
-        {
-            "name": "right-sidebar",
-            "title": "Right Sidebar"
-        }
-    ],
-    "menus": [
-        {
-            "name": "main_menu",
-            "title": "Main menu"
-        },
-        {
-            "name": "left_menu",
-            "title": "Left menu"
+            "name": "name",
+            "title": "Title"
         }
     ],
     "layouts": [
