@@ -2,13 +2,14 @@
 
 module.exports = {
     db:{
-        host:'192.168.1.69',
-        port:'5432',
-        database:'orama',
-        username:'postgres',
-        password:'techmastercms234-',
-        dialect: 'postgres',
-        logging: false
+		host:'localhost',
+		port:'5432',
+		database:'orama',
+		username:'vhchung',
+		password:'123456',
+		dialect: 'postgres',
+        logging: false,
+		native: true
     },
 	assets: {
 		lib: {

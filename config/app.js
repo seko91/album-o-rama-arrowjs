@@ -30,7 +30,6 @@ let fs = require('fs'),
 module.exports = function () {
     // Initialize express app
     let app = express();
-
     // Setting the app router and static folder
     /*let setStaticResourceFolder = function (req, res, next) {
      //console.log(process.cwd());
@@ -58,14 +57,14 @@ module.exports = function () {
         app.locals.keywords = config.app.keywords;
         app.locals.facebookAppId = config.facebook.clientID;
     });
-    // Should be placed before express.static
+/*    // Should be placed before express.static
     app.use(compress({
         filter: function (req, res) {
             return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
         },
         level: 9
-    }));
-    app.use(express.static(path.resolve('./public'), {maxAge: 3600}));
+    }));*/
+    //app.use(express.static(path.resolve('./public'), {maxAge: 3600}));
     // Showing stack errors
     app.set('showStackError', true);
 
@@ -105,37 +104,39 @@ module.exports = function () {
 
     // Express redis session storage
     let secret = "hjjhdsu465aklsdjfhasdasdf342ehsf09kljlasdf";
-    app.use(session({
+    /*app.use(session({
         store: new RedisStore({host: config.redis.host, port: config.redis.port, client: redis}),
         secret: secret,
         resave: false,
         saveUninitialized: true
-    }));
-    app.use(function (req, res, next) {
-        res.setHeader('Cache-Control', 'public, max-age=600');
+    }));*/
+    /*app.use(function (req, res, next) {
+
         if (!req.session) {
             return next(new Error('Session destroy')); // handle error
         }
         next(); // otherwise continue
-    });
+    });*/
     // use passport session
-    app.use(passport.initialize());
-    app.use(passport.session());
+    /*app.use(passport.initialize());
+    app.use(passport.session());*/
 
     //flash messages
-    app.use(require(__base + 'app/middleware/flash-plugin.js'));
+    //app.use(require(__base + 'app/middleware/flash-plugin.js'));
 
     // Use helmet to secure Express headers
-    app.use(helmet.xframe());
+    /*app.use(helmet.xframe());
     app.use(helmet.xssFilter());
     app.use(helmet.nosniff());
-    app.use(helmet.ienoopen());
+    app.use(helmet.ienoopen());*/
     app.disable('x-powered-by');
 
 
     //app.use(setStaticResourceFolder);
     // Passing the request url to environment locals
     app.use(function (req, res, next) {
+        console.log('Begin request : ', new Date().getTime());
+        res.setHeader('Cache-Control', 'public, max-age=600');
         res.locals.url = req.protocol + '://' + req.headers.host + req.url;
         res.locals.route = req.url;
         if (req.user) {
@@ -161,12 +162,12 @@ module.exports = function () {
     });
 
     //module manager backend
-    require(__base + 'app/backend/core_route')(app);
+    //require(__base + 'app/backend/core_route')(app);
     //app.use('/admin/*', require('../app/middleware/modules-plugin.js'));
     // Globbing routing admin files
-    config.getGlobbedFiles('./app/backend/modules/*/route.js').forEach(function (routePath) {
-        app.use('/' + config.admin_prefix, require(path.resolve(routePath)));
-    });
+    //config.getGlobbedFiles('./app/backend/modules/*/route.js').forEach(function (routePath) {
+    //    app.use('/' + config.admin_prefix, require(path.resolve(routePath)));
+    //});
 
     // Globbing routing admin files
     config.getGlobbedFiles('./app/frontend/modules/*/settings/*.js').forEach(function (routePath) {
@@ -174,7 +175,7 @@ module.exports = function () {
     });
 
     //module manager frontend
-    app.use('/*', require('../app/middleware/modules-f-plugin.js'));
+    //app.use('/*', require('../app/middleware/modules-f-plugin.js'));
 
     // Globbing frontend module files
     config.getGlobbedFiles('./app/frontend/modules/*/module.js').forEach(function (routePath) {

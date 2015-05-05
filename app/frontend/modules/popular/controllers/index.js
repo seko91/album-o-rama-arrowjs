@@ -6,7 +6,7 @@
  * Module dependencies.
  */
 
-var util = require('util'),
+let util = require('util'),
     config = require(__base + 'config/config.js'),
     _ = require('lodash'),
     promise = require('bluebird'),
@@ -16,9 +16,9 @@ function PopularModule() {
     BaseModuleFrontend.call(this);
     this.path = "/popular";
 }
-var _module = new PopularModule();
+let _module = new PopularModule();
 _module.index = function (req, res) {
-    var index_view = 'index';
+    let index_view = 'index';
     promise.all([
         __models.sequelize.query(
             'SELECT al.id, al.name, ar.uri, ar.id as artist_id, ar.uri as artist_uri, ar.name as artist, ap.url ' +

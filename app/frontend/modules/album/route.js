@@ -5,7 +5,7 @@
 
 module.exports = function(app) {
     // Root routing
-    var album = require('./controllers/index');
+    let album = require('./controllers/index');
     app.route('/album/:id/:name').get(album.albumById);
 
 };

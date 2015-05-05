@@ -7,7 +7,7 @@ function BlogModule() {
     BaseModuleFrontend.call(this);
     this.path = "/blog";
 }
-var _module = new BlogModule();
+let _module = new BlogModule();
 
 _module.index = function (req, res) {
     let data = null;

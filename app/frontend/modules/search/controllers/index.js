@@ -6,7 +6,7 @@
  * Module dependencies.
  */
 
-var util = require('util'),
+let util = require('util'),
     config = require(__base + 'config/config.js'),
     _ = require('lodash'),
     promise = require('bluebird'),
@@ -16,10 +16,10 @@ function IndexModule() {
     BaseModuleFrontend.call(this);
     this.path = "/search";
 }
-var _module = new IndexModule();
+let _module = new IndexModule();
 _module.index = function (req, res) {
-    var index_view = 'index';
-    var key = req.query.s || '';
+    let index_view = 'index';
+    let key = req.query.s || '';
     key = '%' + key.replace(/\s+/g, '%') + '%';
     __models.artists.findAll({
         where: 'LOWER(name) like \'' +key + '\'',

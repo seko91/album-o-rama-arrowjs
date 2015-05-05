@@ -5,7 +5,7 @@
 
 module.exports = function(app) {
     // Root routing
-    var tag = require('./controllers/index');
+    let tag = require('./controllers/index');
     app.route('/tag/:name').get(tag.index);
     app.route('/tag/:name/:page').get(tag.index);
 };

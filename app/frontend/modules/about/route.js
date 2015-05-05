@@ -5,7 +5,7 @@
 
 module.exports = function(app) {
     // Root routing
-    var about = require('./controllers/index');
+    let about = require('./controllers/index');
     app.route('/about').get(about.index);
 
 };

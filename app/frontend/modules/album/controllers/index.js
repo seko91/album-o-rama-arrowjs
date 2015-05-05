@@ -6,7 +6,7 @@
  * Module dependencies.
  */
 
-var util = require('util'),
+let util = require('util'),
     config = require(__base + 'config/config.js'),
     _ = require('lodash'),
     promise = require('bluebird'),
@@ -16,10 +16,10 @@ function IndexModule() {
     BaseModuleFrontend.call(this);
     this.path = "/album";
 }
-var _module = new IndexModule();
+let _module = new IndexModule();
 _module.albumById = function (req, res) {
-    var index_view = 'index';
-    var id = req.params.id;
+    let index_view = 'index';
+    let id = req.params.id;
     promise.all([
         __models.albums_photos.find({
             where: {

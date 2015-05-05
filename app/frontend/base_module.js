@@ -11,12 +11,13 @@ var nunjucks = require('nunjucks'),
 var env = __.createNewEnv([__dirname + '/themes']);
 function BaseModule() {
 
-    this.render = function (req, res, view, options) {
+    this.render = function (req, res, view, options, fn) {
+        //console.time('render');
         let self = this;
         //get messages from session
-        res.locals.messages = req.session.messages;
+        //res.locals.messages = req.session.messages;
         //clear session messages
-        req.session.messages = [];
+        //req.session.messages = [];
         if (view.indexOf('.html') == -1) {
             view += '.html';
         }
@@ -29,15 +30,21 @@ function BaseModule() {
             env.loaders[0].searchPaths = [__dirname + '/themes', __dirname + '/modules'];
             view = self.path + '/views/' + view;
         }
-        env.render(view, _.assign(res.locals, options), function (err, re) {
-            if (err) {
-                res.send(err.stack);
-            }
-            else {
-                res.send(re);
-            }
+        if(fn){
+            env.render(view, _.assign(res.locals, options), fn);
+        }
+        else{
+            env.render(view, _.assign(res.locals, options), function (err, re) {
+                if (err) {
+                    res.send(err.stack);
+                }
+                else {
+                    res.send(re);
+                }
+                //console.timeEnd('render');
+            });
+        }
 
-        });
     };
 
     let render_error = function (req, res, view) {

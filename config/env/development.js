@@ -2,13 +2,14 @@
 
 module.exports = {
     db:{
-        host:'192.168.1.69',
+        host:'localhost',
         port:'5432',
         database:'orama',
-        username:'postgres',
-        password:'techmastercms234-',
+        username:'vhchung',
+        password:'123456',
         dialect: 'postgres',
-        logging: true
+        logging: true,
+		native: true
     },
     redis:{
         host:'localhost',

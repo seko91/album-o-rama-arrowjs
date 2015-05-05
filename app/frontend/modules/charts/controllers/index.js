@@ -6,7 +6,7 @@
  * Module dependencies.
  */
 
-var util = require('util'),
+let util = require('util'),
     config = require(__base + 'config/config.js'),
     _ = require('lodash'),
     promise = require('bluebird'),
@@ -16,10 +16,10 @@ function IndexModule() {
     BaseModuleFrontend.call(this);
     this.path = "/charts";
 }
-var _module = new IndexModule();
+let _module = new IndexModule();
 _module.index = function (req, res) {
-    var index_view = 'index';
-    var tagGenres = [
+    let index_view = 'index';
+    let tagGenres = [
         'pop', 'rock', 'rap',
         'rnb', 'electronic', 'alternative',
         'folk', 'country', 'hip-hop',
@@ -27,7 +27,7 @@ _module.index = function (req, res) {
         'metal', 'ambient', 'soul',
         'jazz', 'latin', 'punk'
     ];
-    var charts = [];
+    let charts = [];
 
     tagGenres.forEach(function (tag) {
         charts.push(

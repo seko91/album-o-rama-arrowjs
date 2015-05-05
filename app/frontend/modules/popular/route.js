@@ -5,6 +5,6 @@
 
 module.exports = function(app) {
     // Root routing
-    var pop = require('./controllers/index');
+    let pop = require('./controllers/index');
     app.route('/popular').get(pop.index);
 };

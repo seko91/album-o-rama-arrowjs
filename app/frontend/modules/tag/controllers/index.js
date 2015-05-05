@@ -6,7 +6,7 @@
  * Module dependencies.
  */
 
-var util = require('util'),
+let util = require('util'),
     config = require(__base + 'config/config.js'),
     _ = require('lodash'),
     promise = require('bluebird');
@@ -15,11 +15,11 @@ function TagModule() {
     BaseModuleFrontend.call(this);
     this.path = "/tag";
 }
-var _module = new TagModule();
+let _module = new TagModule();
 _module.index = function (req, res) {
-    var index_view = 'index';
-    var page = req.params.page || 1;
-    var name = req.params.name;
+    let index_view = 'index';
+    let page = req.params.page || 1;
+    let name = req.params.name;
     __models.tags.find({
         where: {
             name: name
@@ -49,8 +49,8 @@ _module.index = function (req, res) {
             offset: (page - 1) * 30
         })
     }).then(function(results){
-        var totalPage = Math.ceil(results.count / 30);
-        var prev = (page > 1) ? (page - 1) : 0,
+        let totalPage = Math.ceil(results.count / 30);
+        let prev = (page > 1) ? (page - 1) : 0,
             next = ((page + 1) <= totalPage) ? (page +  1) : 0;
 
         _module.render(req, res, index_view, {
